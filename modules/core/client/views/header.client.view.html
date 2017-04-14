@@ -1,62 +1,8 @@
-<!--
-<div class="container" ng-controller="HeaderController as vm">
-  <div class="navbar-header">
-    <button class="navbar-toggle" type="button" ng-click="vm.isCollapsed = !vm.isCollapsed">
-      <span class="sr-only">Toggle navigation</span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-      <span class="icon-bar"></span>
-    </button>
-    <a ui-sref="home" class="navbar-brand">MEAN.JS</a>
-  </div>
-  <nav class="navbar-collapse" uib-collapse="!vm.isCollapsed" role="navigation">
-    <ul class="nav navbar-nav" ng-if="vm.menu.shouldRender(vm.authentication.user);">
-      <li ng-repeat="item in vm.menu.items | orderBy: 'position'" ng-if="item.shouldRender(vm.authentication.user);" ng-switch="item.type" ng-class="{ dropdown: item.type === 'dropdown' }" ui-sref-active="active" class="{{item.class}}" uib-dropdown="item.type === 'dropdown'">
-        <a ng-switch-when="dropdown" class="dropdown-toggle" uib-dropdown-toggle role="button">{{::item.title}}&nbsp;<span class="caret"></span></a>
-        <ul ng-switch-when="dropdown" class="dropdown-menu">
-          <li ng-repeat="subitem in item.items | orderBy: 'position'" ng-if="subitem.shouldRender(vm.authentication.user);">
-            <a ui-sref="{{subitem.state}}({{subitem.params}})" ng-bind="subitem.title"></a>
-          </li>
-        </ul>
-        <a ng-switch-default ui-sref="{{item.state}}" ng-bind="item.title"></a>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right" ng-hide="vm.authentication.user">
-      <li ui-sref-active="active">
-        <a ui-sref="authentication.signup">Sign Up</a>
-      </li>
-      <li class="divider-vertical"></li>
-      <li ui-sref-active="active">
-        <a ui-sref="authentication.signin">Sign In</a>
-      </li>
-    </ul>
-    <ul class="nav navbar-nav navbar-right" ng-show="vm.authentication.user">
-      <li class="dropdown" uib-dropdown>
-        <a class="dropdown-toggle user-header-dropdown-toggle" uib-dropdown-toggle role="button">
-          <img ng-src="/{{vm.authentication.user.profileImageURL}}" alt="{{vm.authentication.user.displayName}}" class="header-profile-image" />
-          <span ng-bind="vm.authentication.user.displayName"></span> <b class="caret"></b>
-        </a>
-        <ul class="dropdown-menu" role="menu">
-          <li ui-sref-active="active" ng-repeat="item in vm.accountMenu.items">
-            <a ui-sref="{{item.state}}" ng-bind="item.title"></a>
-          </li>
-          <li class="divider"></li>
-          <li>
-            <a href="/api/auth/signout" target="_self">Signout</a>
-          </li>
-        </ul>
-      </li>
-    </ul>
-  </nav>
-</div>
--->
-
-
 <!-- Main Header -->
 <header class="main-header">
 
   <!-- Logo -->
-  <a href="index2.html" class="logo">
+  <a ui-sref="home" class="logo">
     <!-- mini logo for sidebar mini 50x50 pixels -->
     <span class="logo-mini"><b>A</b>LT</span>
     <!-- logo for regular state and mobile devices -->
@@ -71,7 +17,16 @@
     </a>
     <!-- Navbar Right Menu -->
     <div class="navbar-custom-menu">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav" ng-hide="vm.authentication.user">
+        <li ui-sref-active="active">
+          <a ui-sref="authentication.signup">Sign Up</a>
+        </li>
+        <li class="divider-vertical"></li>
+        <li ui-sref-active="active">
+          <a ui-sref="authentication.signin">Sign In</a>
+        </li>
+      </ul>
+      <ul class="nav navbar-nav" ng-show="vm.authentication.user">
         <!-- Messages: style can be found in dropdown.less-->
         <li class="dropdown messages-menu">
           <!-- Menu toggle button -->
@@ -167,14 +122,18 @@
             </li>
           </ul>
         </li>
+
+
+
+
         <!-- User Account Menu -->
         <li class="dropdown user user-menu">
           <!-- Menu Toggle Button -->
           <a href="#" class="dropdown-toggle" data-toggle="dropdown">
             <!-- The user image in the navbar-->
-            <img src="dist/img/user2-160x160.jpg" class="user-image" alt="User Image">
+            <img ng-src="/{{vm.authentication.user.profileImageURL}}" alt="{{vm.authentication.user.displayName}}" class="user-image" />
             <!-- hidden-xs hides the username on small devices so only the image appears. -->
-            <span class="hidden-xs">Alexander Pierce</span>
+            <span class="hidden-xs" ng-bind="vm.authentication.user.displayName"></span>
           </a>
           <ul class="dropdown-menu">
             <!-- The user image in the menu -->
@@ -182,21 +141,15 @@
               <img src="dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
 
               <p>
-                Alexander Pierce - Web Developer
-                <small>Member since Nov. 2012</small>
+                {{vm.authentication.user.displayName}}
+                <small>{{vm.authentication.user.username}}</small>
               </p>
             </li>
             <!-- Menu Body -->
             <li class="user-body">
               <div class="row">
-                <div class="col-xs-4 text-center">
-                  <a href="#">Followers</a>
-                </div>
-                <div class="col-xs-4 text-center">
-                  <a href="#">Sales</a>
-                </div>
-                <div class="col-xs-4 text-center">
-                  <a href="#">Friends</a>
+                <div class="col-xs-4 text-center" ng-repeat="item in vm.accountMenu.items" ng-if="$index != 0">
+                  <a ui-sref="{{item.state}}" ng-bind="item.title"></a>
                 </div>
               </div>
               <!-- /.row -->
@@ -204,17 +157,17 @@
             <!-- Menu Footer-->
             <li class="user-footer">
               <div class="pull-left">
-                <a href="#" class="btn btn-default btn-flat">Profile</a>
+                <a ui-sref="settings.profile" class="btn btn-default btn-flat">Profile</a>
               </div>
               <div class="pull-right">
-                <a href="#" class="btn btn-default btn-flat">Sign out</a>
+                <a href="/api/auth/signout" target="_self" class="btn btn-default btn-flat">Sign out</a>
               </div>
             </li>
           </ul>
         </li>
         <!-- Control Sidebar Toggle Button -->
         <li>
-          <a href="#" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
+          <a href="javascript:;" data-toggle="control-sidebar"><i class="fa fa-gears"></i></a>
         </li>
       </ul>
     </div>
@@ -252,22 +205,32 @@
     <!-- /.search form -->
 
     <!-- Sidebar Menu -->
-    <ul class="sidebar-menu">
+    <ul class="sidebar-menu" ng-if="vm.menu.shouldRender(vm.authentication.user);">
       <li class="header">HEADER</li>
       <!-- Optionally, you can add icons to the links -->
-      <li class="active"><a href="#"><i class="fa fa-link"></i> <span>Link</span></a></li>
-      <li><a href="#"><i class="fa fa-link"></i> <span>Another Link</span></a></li>
-      <li class="treeview">
-        <a href="#"><i class="fa fa-link"></i> <span>Multilevel</span>
+      <li ng-repeat="item in vm.menu.items | orderBy: 'position'"
+          ng-if="item.shouldRender(vm.authentication.user);"
+          ng-switch="item.type"
+          ui-sref-active="active"
+          class="treeview {{item.class}}">
+
+        <a ng-switch-when="dropdown" href="#">
+          <i class="fa fa-link"></i> <span>{{::item.title}}&nbsp;</span>
           <span class="pull-right-container">
               <i class="fa fa-angle-left pull-right"></i>
-            </span>
+          </span>
         </a>
-        <ul class="treeview-menu">
-          <li><a href="#">Link in level 2</a></li>
-          <li><a href="#">Link in level 2</a></li>
+        <ul ng-switch-when="dropdown" class="treeview-menu">
+          <li ng-repeat="subitem in item.items | orderBy: 'position'" ng-if="subitem.shouldRender(vm.authentication.user);">
+            <a ui-sref="{{subitem.state}}({{subitem.params}})" ng-bind="subitem.title"></a>
+          </li>
         </ul>
+
+        <a ng-switch-default ui-sref="{{item.state}}"><i class="fa fa-link"></i> <span ng-bind="item.title"></span></a>
       </li>
+
+
+
     </ul>
     <!-- /.sidebar-menu -->
   </section>

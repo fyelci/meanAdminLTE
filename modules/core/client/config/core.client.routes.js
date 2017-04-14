@@ -57,9 +57,13 @@
       .state('not-found', {
         parent: 'main',
         url: '/not-found',
-        templateUrl: '/modules/core/client/views/404.client.view.html',
-        controller: 'ErrorController',
-        controllerAs: 'vm',
+        'views' : {
+          '@': {
+            templateUrl: '/modules/core/client/views/404.client.view.html',
+            controller: 'ErrorController',
+            controllerAs: 'vm'
+          }
+        },
         params: {
           message: function($stateParams) {
             return $stateParams.message;
@@ -73,9 +77,13 @@
       .state('bad-request', {
         parent: 'main',
         url: '/bad-request',
-        templateUrl: '/modules/core/client/views/400.client.view.html',
-        controller: 'ErrorController',
-        controllerAs: 'vm',
+        'views' : {
+          '@': {
+            templateUrl: '/modules/core/client/views/400.client.view.html',
+            controller: 'ErrorController',
+            controllerAs: 'vm'
+          }
+        },
         params: {
           message: function($stateParams) {
             return $stateParams.message;
@@ -89,7 +97,11 @@
       .state('forbidden', {
         parent: 'main',
         url: '/forbidden',
-        templateUrl: '/modules/core/client/views/403.client.view.html',
+        'views' : {
+          '@': {
+            templateUrl: '/modules/core/client/views/403.client.view.html'
+          }
+        },
         data: {
           ignoreState: true,
           pageTitle: 'Forbidden'
