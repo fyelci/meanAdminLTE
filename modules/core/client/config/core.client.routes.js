@@ -27,43 +27,17 @@
     });
 
     $stateProvider
-      .state('main', {
-        abstract: true,
-        views: {
-          'mainMenu': {
-            templateUrl: '/modules/core/client/views/header.client.view.html',
-            controller: 'HeaderController',
-            controllerAs: 'vm'
-          },
-          '': {},
-          'footer': {
-            templateUrl: '/modules/core/client/views/footer.client.view.html',
-            controller: 'FooterController',
-            controllerAs: 'vm'
-          }
-        }
-      })
       .state('home', {
-        parent: 'main',
         url: '/',
-        'views' : {
-          '@': {
-            templateUrl: '/modules/core/client/views/home.client.view.html',
-            controller: 'HomeController',
-            controllerAs: 'vm'
-          }
-        }
+        templateUrl: '/modules/core/client/views/home.client.view.html',
+        controller: 'HomeController',
+        controllerAs: 'vm'
       })
       .state('not-found', {
-        parent: 'main',
         url: '/not-found',
-        'views' : {
-          '@': {
-            templateUrl: '/modules/core/client/views/404.client.view.html',
-            controller: 'ErrorController',
-            controllerAs: 'vm'
-          }
-        },
+        templateUrl: '/modules/core/client/views/404.client.view.html',
+        controller: 'ErrorController',
+        controllerAs: 'vm',
         params: {
           message: function($stateParams) {
             return $stateParams.message;
@@ -75,15 +49,10 @@
         }
       })
       .state('bad-request', {
-        parent: 'main',
         url: '/bad-request',
-        'views' : {
-          '@': {
-            templateUrl: '/modules/core/client/views/400.client.view.html',
-            controller: 'ErrorController',
-            controllerAs: 'vm'
-          }
-        },
+        templateUrl: '/modules/core/client/views/400.client.view.html',
+        controller: 'ErrorController',
+        controllerAs: 'vm',
         params: {
           message: function($stateParams) {
             return $stateParams.message;
@@ -95,13 +64,8 @@
         }
       })
       .state('forbidden', {
-        parent: 'main',
         url: '/forbidden',
-        'views' : {
-          '@': {
-            templateUrl: '/modules/core/client/views/403.client.view.html'
-          }
-        },
+        templateUrl: '/modules/core/client/views/403.client.view.html',
         data: {
           ignoreState: true,
           pageTitle: 'Forbidden'

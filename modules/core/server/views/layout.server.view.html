@@ -50,7 +50,11 @@
 
 <body class="ng-cloak hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
-  <header ui-view="mainMenu"></header>
+
+
+
+  <!-- Main Header -->
+  <div ng-include="'/modules/core/client/views/header.client.view.html'"></div>
 
 
 
@@ -72,7 +76,15 @@
 
 
   <!-- Main Footer -->
-  <div ui-view="footer"></div>
+  <footer class="main-footer">
+    <!-- To the right -->
+    <div class="pull-right hidden-xs">
+      Anything you want
+    </div>
+    <!-- Default to the left -->
+    <strong>Copyright &copy; 2016 <a href="#">Company</a>.</strong> All rights reserved.
+  </footer>
+
 
   <!-- Control Sidebar -->
   <aside class="control-sidebar control-sidebar-dark">
